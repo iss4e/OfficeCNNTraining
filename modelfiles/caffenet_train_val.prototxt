@@ -9,9 +9,8 @@ layer {
   }
   transform_param {
     mirror: true
-    crop_h : 173 
-    crop_w : 327
-    mean_file: "/home/sasha-d/research_2018/model2/input/mean.binaryproto"
+    crop_size: 227
+    mean_file: "PATH_TO_REPO/input/mean.binaryproto"
   }
 # mean pixel / channel-wise mean instead of mean image
 #  transform_param {
@@ -22,7 +21,7 @@ layer {
 #    mirror: true
 #  }
   data_param {
-    source: "/home/sasha-d/research_2018/model2/input/train_lmdb"
+    source: "PATH_TO_REPO/input/train_lmdb"
     batch_size: 256
     backend: LMDB
   }
@@ -37,9 +36,8 @@ layer {
   }
   transform_param {
     mirror: false
-    crop_h : 173
-    crop_w : 327
-    mean_file: "/home/sasha-d/research_2018/model2/input/mean.binaryproto"
+    crop_size: 227
+    mean_file: "PATH_TO_REPO/input/mean.binaryproto"
   }
 # mean pixel / channel-wise mean instead of mean image
 #  transform_param {
@@ -50,7 +48,7 @@ layer {
 #    mirror: true
 #  }
   data_param {
-    source: "/home/sasha-d/research_2018/model2/input/validation_lmdb"
+    source: "PATH_TO_REPO/input/validation_lmdb"
     batch_size: 50
     backend: LMDB
   }
