@@ -1,4 +1,8 @@
 ## Training a CNN for overhead images using transfer learning
+This repository is used for training a CNN for two-class classification of occupied and unoccupied spaces. 
+It uses Caffe as the framework for creating CNNs, and the bvlc_reference_caffenet as the trained network 
+that needs to be retrained.
+
 *Note*: The source http://adilmoujahid.com/posts/2016/06/introduction-deep-learning-python-caffe/ 
 was used heavily for the creation of this repo, and should be consulted for further details.
 ___
