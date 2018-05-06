@@ -1,15 +1,3 @@
-
-'''
-Title           :create_lmdb.py
-Description     :This script divides the training images into 2 sets and stores them in lmdb databases for training and validation.
-Author          :Adil Moujahid
-Date Created    :20160619
-Date Modified   :20160625
-version         :0.2
-usage           :python create_lmdb.py
-python_version  :2.7.11
-'''
-
 import os
 import glob
 import random
@@ -22,6 +10,10 @@ from caffe.proto import caffe_pb2
 import lmdb
 import sys
 import pudb
+
+"""
+This script divides the training images into 2 sets and stores them in lmdb databases for training and validation. The path 'train_data' should be set to the user's folder of images
+"""
 
 #Size of images
 IMAGE_WIDTH = 227
@@ -70,13 +62,15 @@ def read_label(img_path):
         label = label.strip()
         return int(label)
 
-train_lmdb = '/home/sasha-d/research_2018/model2/input/train_lmdb'
-validation_lmdb = '/home/sasha-d/research_2018/model2/input/validation_lmdb'
+train_lmdb = '../input/train_lmdb'
+validation_lmdb = '../input/validation_lmdb'
 
 os.system('rm -rf  ' + train_lmdb)
 os.system('rm -rf  ' + validation_lmdb)
 
-
+# USER-SET PARAMETER
+# path should be set by user to the folder containing images + labels
+# Note that the path should end with /*jpg to glob for images ONLY
 train_data = [img for img in glob.glob("/home/sasha-d/research_2018/model2/large_dataset/*jpg")]
 
 #Shuffle train_data

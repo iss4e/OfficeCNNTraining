@@ -1,14 +1,3 @@
-'''
-Title           :make_predictions_1.py
-Description     :This script makes predictions using the 1st trained model and generates a submission file.
-Author          :Adil Moujahid
-Date Created    :20160623
-Date Modified   :20160625
-version         :0.2
-usage           :python make_predictions_1.py
-python_version  :2.7.11
-'''
-
 import os
 import glob
 import cv2
@@ -18,6 +7,14 @@ import numpy as np
 from caffe.proto import caffe_pb2
 import pudb
 
+"""
+This script makes predictions for an image being occupied or unoccupied, given an input dataset of images.
+These images should also be labelled, as this allows validation of the model's accuracy.
+The output is a csv file with the image path, predicted classes, and actual labelled values.
+Note: 1 = OCCUPIED
+      0 = UNOCCUPIED
+The main path that must be set by the user is the 'test_img_paths', pointing to the folder w/ labelled images
+"""
 caffe.set_mode_cpu() 
 #Size of images
 IMAGE_WIDTH = 227
@@ -62,15 +59,15 @@ Reading mean image, caffe model and its weights
 '''
 #Read mean image
 mean_blob = caffe_pb2.BlobProto()
-with open('/home/sasha-d/research_2018/model2/input/mean.binaryproto','rb') as f:
+with open('../input/mean.binaryproto','rb') as f:
     mean_blob.ParseFromString(f.read())
 mean_array = np.asarray(mean_blob.data, dtype=np.float32).reshape(
     (mean_blob.channels, mean_blob.height, mean_blob.width))
 
 
 #Read model architecture and trained model's weights
-net = caffe.Net('/home/sasha-d/research_2018/model2/my_code/caffenet_deploy_2.prototxt',
-                '/home/sasha-d/research_2018/model2/output/caffe_model2_iter_10000.caffemodel',
+net = caffe.Net('../modelfiles/caffenet_deploy.prototxt',
+                '../output/caffe_model2_iter_10000.caffemodel',
                 caffe.TEST)
 
 #Define image transformers
@@ -78,9 +75,6 @@ transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
 transformer.set_mean('data', mean_array)
 transformer.set_transpose('data', (2,0,1))
 
-'''
-Making predicitions
-'''
 #Reading image paths
 test_img_paths = [img_path for img_path in glob.glob("/home/sasha-d/research_2018/model2/small_dataset_2/*.jpg")]
 
@@ -114,8 +108,8 @@ for img_path in test_img_paths:
 '''
 Making submission file
 '''
-with open("/home/sasha-d/research_2018/model2/model2_small_dataset_2.csv","w+") as f:
-    f.write("id,label\n")
+with open("../validation/small_dataset.csv","w+") as f:
+    f.write("image path,predicted label, actual label\n")
     for i in range(len(test_names)):
         f.write(str(test_names[i])+","+str(preds[i])+","+str(labels[i]) + "\n")
 f.close()
