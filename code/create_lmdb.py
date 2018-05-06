@@ -12,7 +12,9 @@ import sys
 import pudb
 
 """
-This script divides the training images into 2 sets and stores them in lmdb databases for training and validation. The path 'train_data' should be set to the user's folder of images
+This script divides the training images into 2 sets and stores them in 
+lmdb databases for training and validation. 
+The path 'train_data' should be set to the user's folder of images
 """
 
 #Size of images
